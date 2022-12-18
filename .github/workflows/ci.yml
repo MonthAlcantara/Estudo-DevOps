@@ -32,16 +32,17 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
-# Comando que será executado dentro da maquina
-      run: mvn -B package --file pom.xml
-# COmo nesse projeto eu uso BD, preciso subir o docker compose com ele
+    # COmo nesse projeto eu uso BD, preciso subir o docker compose com ele
 # Primeiro faço um build, caso tenha alguma imagem pra ser buildadaa no compose
     - name: Build-DB
       run: docker compose build
 # Agora subiindo o compose em -d pra não gerar problema na pipe      
     - name: Create-DB
       run: docker compose up -d  
+      
+    - name: Build with Maven
+# Comando que será executado dentro da maquina
+      run: mvn -B package --file pom.xml
       
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
