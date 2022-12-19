@@ -41,6 +41,7 @@ jobs:
       run: docker compose up -d  
   
   build:
+    needs: pre-build
 # Será executado na ultima versão do ubuntu os passos abaixo
     runs-on: ubuntu-latest
 # Tudo o que for declarado no "uses", será a biblioteca usada pra realizar o step
