@@ -11,10 +11,10 @@ name: Java CI with Maven
 on:
 # Ao receber um push na branch master ou
   push:
-    branches: [ "master" ]
+    branches: [ "*" ]
 # Pull request na branch master
   pull_request:
-    branches: [ "master" ]
+    branches: [ "*" ]
 
 # O que será executado?
 jobs:
