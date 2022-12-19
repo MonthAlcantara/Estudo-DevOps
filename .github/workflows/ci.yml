@@ -47,9 +47,6 @@ jobs:
 # Tudo o que for declarado no "uses", será a biblioteca usada pra realizar o step
 # "name" indica o que será feito nesse step 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-
     - name: Build with Maven
 # Comando que será executado dentro da maquina
       run: mvn -B package --file pom.xml
