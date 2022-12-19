@@ -39,14 +39,7 @@ jobs:
 # Agora subiindo o compose em -d pra não gerar problema na pipe      
     - name: Create-DB
       run: docker compose up -d  
-  
-  build:
-    needs: pre-build
-# Será executado na ultima versão do ubuntu os passos abaixo
-    runs-on: ubuntu-latest
-# Tudo o que for declarado no "uses", será a biblioteca usada pra realizar o step
-# "name" indica o que será feito nesse step 
-    steps:
+      
     - name: Build with Maven
 # Comando que será executado dentro da maquina
       run: mvn -B package --file pom.xml
