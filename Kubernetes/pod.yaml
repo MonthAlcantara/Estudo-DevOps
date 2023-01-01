@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: "goserver"
+  #Esse cara vai me ajudar posteriormente nas buscas
+  #Se eu tiver 1Mi de Pods, eu consigo filtrar pelos PODs q tem a label app = goserver
+  labels: 
+    app: "goserver"
+spec:
+  containers:
+    - name: goserver
+      image: "montivaljunior/hello-go:latest"

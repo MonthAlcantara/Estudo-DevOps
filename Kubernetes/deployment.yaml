@@ -1,0 +1,50 @@
+#Caso eu mude a versão da minha imagem, o deployment consegue perceber
+#e com isso ele mata todas as réplicas e sobe novas com a nova versão
+apiVersion: apps/v1
+#A unica mudança no arquivo de definição é essa. Troca Replicaset por Deployment
+kind: Deployment
+metadata:
+  name: goserver
+  labels:
+    app: goserver
+spec:
+  selector:
+    matchLabels:
+      app: goserver
+  replicas: 1
+  template:    
+    metadata: 
+      labels: 
+        app: "goserver"
+    spec:
+      containers:
+        - name: goserver
+          image: "montivaljunior/hello-go:latest"
+# Como checarei a saúde do meu container?          
+          livenessProbe:
+#Usarei uma comunicação via http          
+            httpGet:
+#Consultarei no path /health            
+              path: /health
+#Na porta 8080 do CONTAINER, não é a porta do service 
+              port: 8080
+# De 5 em 5 segundos
+            periodSeconds: 5
+# Quantas vezes a resposta tem q ser negativa pra que eu assuma
+#Que a aplicação caiu?
+            failureThresold: 1
+# Quantos segundos eu vou esperar uma resposta?
+            timeoutSeconds: 1
+# Quantas vezes tenho que bater no path pra considerar que está tudo ok
+            successTrhreshold: 3    
+          env:
+            - name: nome
+              valueFrom: 
+                configMapKeyRef:
+                  name: goserver-env
+                  key: nome
+            - name: idade
+              valueFrom: 
+                configMapKeyRef:
+                  name: goserver-env
+                  key: idade 

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: goserver-service
+spec:
+#Responsavel por filtrar todos os pods que estarão associados a esse service
+  selector:
+#Pegue todos os Pods que tenham o "app" declarado no matchlabels como "goserver"  
+    app: goserver
+  type: ClusterIP
+#  type: LoadBalancer
+#  type: NodePort
+  ports:
+  - name: goserver-service
+    port: 80
+    #TargetPort é a porta doo container. Sempre que eu quiser direcionar a requisição vinda do service
+    #para alguma porta específica do container eu uso o targetPort
+    #Nesse exemplo o svc vai receber a requisição na porta 80 e vai mandar pra porta 8081 do container
+    #Se eu não especificar o targetPort ele vai assumir que a porta do container é a mesma que o service
+#   targetPort: 8081
+    protocol: TCP

@@ -1,0 +1,25 @@
+#Ponto negativo de fazer uso do replicaset sem o deployment é o fato de que
+#se eu atualizar a versão da imagem que vai rodar no pod, apenas se eu matar todos
+#os pods e subir denovo, é que ele vai carregar a nova versão. Ele não atualiza matando
+# os que ja tem pra subir a nova
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goserver
+  labels:
+    app: goserver
+spec:
+#Quando eu uso uma label eu consigo especificar por meio do seletor
+  selector:
+    matchLabels:
+      app: goserver
+  replicas: 10
+  template:
+#Esse template é a mesma declaração da criação de um POD    
+    metadata: 
+      labels: 
+        app: "goserver"
+    spec:
+      containers:
+        - name: goserver
+          image: "montivaljunior/hello-go:latest"    
