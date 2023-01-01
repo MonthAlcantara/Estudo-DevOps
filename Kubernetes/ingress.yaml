@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-host
+# Cada sistema que vai usar esse ingress pode pegar essa annotation para interpretar pra usar em alguma funcionalidade
+  annotations:
+ # Esse ingress usará um ingress do nginx (è como se fosse um adaptador) 
+    kubernetes.io/ingress.class: "nginx"
+spec:
+# Regras
+  rules:
+# Qual host vai utilizar esse ingress?  
+  - host: "ingress.monthalcantara.com.br"
+    http:
+      paths:
+# Essa regra vale pra cada chamada que o prefixo for / por exemplo ingress.monthalcantara.com.br/      
+      - pathType: Prefix
+        path: "/"
+#Qual nome do serviço que eu vou querer acessar com essa regra?        
+        backend:
+          service:
+            name: goserver-service
+            port: 
+              number: 80
