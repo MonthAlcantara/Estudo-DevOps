@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proposta
+spec:
+  selector:
+    matchLabels:
+      app: proposta
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: proposta
+    spec:
+      containers:
+      - name: proposta
+        image: montivaljunior/proposta
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        envFrom:
+            - configMapRef:
+                name: proposta-env
+        ports:
+        - containerPort: 8080
