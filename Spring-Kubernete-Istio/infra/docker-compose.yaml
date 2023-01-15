@@ -1,0 +1,11 @@
+version: '3'
+services:
+  analise:
+    image: 'zupacademy/analise-financeira'
+    ports:
+      - 9999:9999
+    environment:
+      SERVER_PORT: 9999
+      LOG_LEVEL: INFO
+      URL_SISTEMA_CARTAO: http://contas:8888/api/cartoes
+      JAEGER_ENDPOINT: http://jaeger:14268/api/traces

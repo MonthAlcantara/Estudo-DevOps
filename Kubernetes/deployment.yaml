@@ -20,8 +20,21 @@ spec:
       containers:
         - name: goserver
           image: "montivaljunior/hello-go:latest"
-# Como checarei a saúde do meu container?          
-          livenessProbe:
+          startupProbe:
+#Usarei uma comunicação via http          
+            httpGet:
+#Consultarei no path /health            
+              path: /health
+#Na porta 8080 do CONTAINER, não é a porta do service 
+              port: 8080
+# De 3 em 3 segundos
+            periodSeconds: 3          
+# Quantas vezes a resposta tem q ser negativa pra que eu assuma
+# que a aplicação está pronta? de 3 em 3 segundos por 30 vezes vai
+# dar 1 minuto e meio...tempo suficiente pra uma app subir.
+            failureThresold: 30
+
+          readnessProbe:
 #Usarei uma comunicação via http          
             httpGet:
 #Consultarei no path /health            
@@ -29,22 +42,25 @@ spec:
 #Na porta 8080 do CONTAINER, não é a porta do service 
               port: 8080
 # De 5 em 5 segundos
-            periodSeconds: 5
+            periodSeconds: 5          
 # Quantas vezes a resposta tem q ser negativa pra que eu assuma
 #Que a aplicação caiu?
+            failureThresold: 1
+# Aguarda 10 segundos pra começar a pingar o /health. O startupProbres ja está fazendo isso
+#            initialDelaySeconds: 10    
+
+          livenessProbe:      
+            httpGet:    
+              path: /health
+              port: 8080
+            periodSeconds: 5
             failureThresold: 1
 # Quantos segundos eu vou esperar uma resposta?
             timeoutSeconds: 1
 # Quantas vezes tenho que bater no path pra considerar que está tudo ok
-            successTrhreshold: 3    
-          env:
-            - name: nome
-              valueFrom: 
-                configMapKeyRef:
-                  name: goserver-env
-                  key: nome
-            - name: idade
-              valueFrom: 
-                configMapKeyRef:
-                  name: goserver-env
-                  key: idade 
+            successTrhreshold: 1
+#            initialDelaySeconds: 10 
+
+          envFrom:
+            - configMapRef:
+                name: goserver-env 

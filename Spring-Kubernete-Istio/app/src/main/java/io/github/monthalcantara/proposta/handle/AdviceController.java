@@ -1,4 +1,4 @@
-package io.github.monthalcantara.proposta.controller.handle;
+package io.github.monthalcantara.proposta.handle;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.github.monthalcantara.proposta.exception.RegraNegocioException;

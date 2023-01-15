@@ -1,5 +1,6 @@
 package io.github.monthalcantara.proposta.controller;
 
+import io.github.monthalcantara.proposta.client.PropostaClient;
 import io.github.monthalcantara.proposta.dto.NovaPropostaRequest;
 import io.github.monthalcantara.proposta.dto.PropostaCriadaResponse;
 import io.github.monthalcantara.proposta.service.CadastraPropostaService;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class CadastraPropostaController {
 
     private final CadastraPropostaService cadastraPropostaService;
+    private final PropostaClient client;
     private final Logger log = LoggerFactory.getLogger(CadastraPropostaController.class);
 
-    public CadastraPropostaController(CadastraPropostaService cadastraPropostaService) {
+    public CadastraPropostaController(CadastraPropostaService cadastraPropostaService, PropostaClient client) {
         this.cadastraPropostaService = cadastraPropostaService;
+        this.client = client;
     }
 
     @PostMapping
